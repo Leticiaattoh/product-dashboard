@@ -5,7 +5,7 @@ const DashboardLayout = () => {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-blue-600 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Product Dashboard</h1>
+          <h1 className="text-2xl font-bold">PD</h1>
           <nav className="flex gap-4">
             <Link to="/dashboard" className="hover:underline">
               Overview

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { HiHeart, HiTrash, HiPencil } from "react-icons/hi";
 import useStore from "../store/useStore";
 import ProductModal from "./ProductModal";
 import AddEditProductModal from "./AddEditProductModal";
 import Pagination from "./Pagination";
+import ProductCard from "./ProductCard";
 
 const ProductTable = () => {
   const { products, favorites, toggleFavorite, deleteProduct, loading, error } =
@@ -75,67 +74,17 @@ const ProductTable = () => {
       </button>
       {loading && <div className="text-center">Loading...</div>}
       {error && <div className="text-center text-red-500">{error}</div>}
-      <div className="overflow-x-auto w-full">
-        <table className="min-w-full bg-white border table-fixed">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2 border text-left w-1/4 sm:w-auto">Name</th>
-              <th className="p-2 border text-left w-1/6 sm:w-auto">Price</th>
-              <th className="p-2 border text-left w-1/4 sm:w-auto">Category</th>
-              <th className="p-2 border text-left w-1/6 sm:w-auto">Rating</th>
-              <th className="p-2 border text-left w-1/6 sm:w-auto">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedProducts.map((product) => (
-              <motion.tr
-                key={product.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="hover:bg-gray-100 cursor-pointer"
-                onClick={() => setSelectedProduct(product)}
-              >
-                <td className="p-2 border">{product.name}</td>
-                <td className="p-2 border">${product.price}</td>
-                <td className="p-2 border">{product.category}</td>
-                <td className="p-2 border">{product.rating}</td>
-                <td className="p-2 border flex gap-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(product.id);
-                    }}
-                  >
-                    <HiHeart
-                      className={`w-5 h-5 ${
-                        favorites.includes(product.id)
-                          ? "text-red-500"
-                          : "text-gray-500"
-                      }`}
-                    />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setEditProduct(product);
-                    }}
-                  >
-                    <HiPencil className="w-5 h-5 text-blue-500" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteProduct(product.id, window.toast);
-                    }}
-                  >
-                    <HiTrash className="w-5 h-5 text-red-500" />
-                  </button>
-                </td>
-              </motion.tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {paginatedProducts.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            isFavorite={favorites.includes(product.id)}
+            onFavorite={() => toggleFavorite(product.id)}
+            onEdit={() => setEditProduct(product)}
+            onDelete={() => deleteProduct(product.id, window.toast)}
+          />
+        ))}
       </div>
       <div className="mt-4 flex justify-center">
         <Pagination
