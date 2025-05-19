@@ -82,6 +82,6 @@ Enhance accessibility (e.g., ARIA labels, keyboard navigation).
 
 
 Hosted Project
-Link to deployed project (Replace with your deployment URL)
+Link to deployed project (https://product-dashboard-trial.netlify.app/)
 GitHub Repository
-Link to repository (Replace with your repository URL)
+Link to repository (https://github.com/Leticiaattoh/product-dashboard)
